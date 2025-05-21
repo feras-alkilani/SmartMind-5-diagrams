@@ -115,6 +115,7 @@
       object-fit: contain;
     }
 
+    /* Highlight style */
     .highlight > .djs-visual > :nth-child(1) {
       stroke: #ff0000 !important;
       stroke-width: 4px !important;
@@ -147,12 +148,13 @@
   <script>
     const viewer = new BpmnJS({ container: '#canvas' });
 
+    // عدلت IDs حسب ملف BPMN اللي عطيتني
     const stepIds = [
       'StartEvent',
-      'EnterUserData',
-      'CheckAge',
-      'CheckUsername',
-      'CreateAccount',
+      'ReceiveFeedback',
+      'AnalyzeFeedback',
+      'GenerateResponse',
+      'SendResponse',
       'EndEvent'
     ];
 
