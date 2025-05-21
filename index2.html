@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BPMN User Registration Animation</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #top-bar {
+      height: 10vh;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      padding: 0 20px;
+      border-bottom: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 12px 25px;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 6px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #bottom-section {
+      height: 90vh;
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #left-side {
+      width: 75%;
+      border-right: 1px solid #ccc;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    #canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    #right-side {
+      width: 25%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-left: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    #logo {
+      width: 80%;
+      max-height: 300px;
+      object-fit: contain;
+    }
+
+    .highlight > .djs-visual > :nth-child(1) {
+      stroke: #ff0000 !important;
+      stroke-width: 4px !important;
+      fill: #fff3cd !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="top-bar">
+    <button onclick="startAnimation()">▶️ Run Scenario</button>
+    <button onclick="nextStep()">➡️ Next Step</button>
+    <button onclick="resetAnimation()">🔁 Reset</button>
+  </div>
+
+  <div id="bottom-section">
+    <div id="left-side">
+      <div id="canvas"></div>
+    </div>
+    <div id="right-side">
+      <img id="logo" src="smartMindLogo.png" alt="SmartMind Logo" />
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/bpmn-js@18.6.1/dist/bpmn-viewer.development.js"></script>
+  <script>
+    const viewer = new BpmnJS({ container: '#canvas' });
+
+    const stepIds = [
+      'StartEvent',
+      'EnterUserData',
+      'CheckAge',
+      'CheckUsername',
+      'CreateAccount',
+      'EndEvent'
+    ];
+
+    let currentStep = -1;
+
+    async function loadDiagram() {
+      try {
+        const response = await fetch('diagram1.bpmn');
+        const xml = await response.text();
+        await viewer.importXML(xml);
+
+        // ** بدون أي تكبير **
+      } catch (err) {
+        console.error('Failed to load BPMN diagram:', err);
+      }
+    }
+
+    function clearHighlights() {
+      const canvas = viewer.get('canvas');
+      stepIds.forEach(id => canvas.removeMarker(id, 'highlight'));
+    }
+
+    async function startAnimation() {
+      currentStep = -1;
+      clearHighlights();
+      for (let i = 0; i < stepIds.length; i++) {
+        currentStep = i;
+        clearHighlights();
+        viewer.get('canvas').addMarker(stepIds[i], 'highlight');
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+      currentStep = -1;
+      clearHighlights();
+    }
+
+    function nextStep() {
+      if(currentStep < stepIds.length - 1) {
+        currentStep++;
+        clearHighlights();
+        viewer.get('canvas').addMarker(stepIds[currentStep], 'highlight');
+      }
+    }
+
+    function resetAnimation() {
+      currentStep = -1;
+      clearHighlights();
+    }
+
+    loadDiagram();
+  </script>
+</body>
+</html>
