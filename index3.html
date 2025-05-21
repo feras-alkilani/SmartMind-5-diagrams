@@ -117,10 +117,10 @@
 
     /* Highlight style */
     .highlight > .djs-visual > :nth-child(1) {
-  stroke: #28a745 !important; 
-  stroke-width: 4px !important;
-  fill: #d4edda !important;   
-}
+      stroke: #28a745 !important; 
+      stroke-width: 4px !important;
+      fill: #d4edda !important;   
+    }
   </style>
 </head>
 <body>
@@ -148,7 +148,6 @@
   <script>
     const viewer = new BpmnJS({ container: '#canvas' });
 
-    // عدلت IDs حسب ملف BPMN اللي عطيتني
     const stepIds = [
       'StartEvent',
       'ReceiveFeedback',
@@ -159,6 +158,7 @@
     ];
 
     let currentStep = -1;
+    let animationRunning = false;
 
     async function loadDiagram() {
       try {
@@ -176,22 +176,27 @@
     }
 
     async function startAnimation() {
+      if(animationRunning) return; // منع تشغيل متكرر
+      animationRunning = true;
       currentStep = -1;
       clearHighlights();
+
       for (let i = 0; i < stepIds.length; i++) {
         currentStep = i;
-        clearHighlights();
         viewer.get('canvas').addMarker(stepIds[i], 'highlight');
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
-      currentStep = -1;
+
+      // انتظر ثانية قبل إزالة التمييز كله
+      await new Promise(resolve => setTimeout(resolve, 1000));
       clearHighlights();
+      currentStep = -1;
+      animationRunning = false;
     }
 
     function nextStep() {
       if(currentStep < stepIds.length - 1) {
         currentStep++;
-        clearHighlights();
         viewer.get('canvas').addMarker(stepIds[currentStep], 'highlight');
       }
     }
@@ -199,6 +204,7 @@
     function resetAnimation() {
       currentStep = -1;
       clearHighlights();
+      animationRunning = false;
     }
 
     function goBack() {
