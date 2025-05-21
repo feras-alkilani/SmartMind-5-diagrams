@@ -84,6 +84,7 @@
     #back-btn {
       position: absolute;
       bottom: 10px;
+      margin: auto;
       left: 10px;
       padding: 8px 16px;
       font-size: 1rem;
@@ -102,47 +103,30 @@
     #right-side {
       width: 25%;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
       border-left: 1px solid #ccc;
-      padding: 20px;
       box-sizing: border-box;
     }
 
     #logo {
       width: 80%;
-      max-height: 200px;
+      max-height: 300px;
       object-fit: contain;
     }
 
-    #description-box {
-      width: 100%;
-      background: #f8f9fa;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 15px;
-      font-size: 1rem;
-      text-align: center;
-      min-height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
     .highlight > .djs-visual > :nth-child(1) {
-      stroke: #ff5722 !important;
-      stroke-width: 5px !important;
-      fill: #fff3e0 !important;
-      transition: all 0.3s ease-in-out;
+      stroke: #ff0000 !important;
+      stroke-width: 4px !important;
+      fill: #fff3cd !important;
     }
   </style>
 </head>
 <body>
 
   <div id="top-bar">
-    <button onclick="startAnimation()">▶️ Run Scenario</button>
-    <button onclick="nextStep()">➡️ Next Step</button>
+    <button onclick="startAnimation()">▶ Run Scenario</button>
+    <button onclick="nextStep()">➡ Next Step</button>
     <button onclick="resetAnimation()">🔁 Reset</button>
   </div>
 
@@ -156,7 +140,6 @@
     </div>
     <div id="right-side">
       <img id="logo" src="smartMindLogo.png" alt="SmartMind Logo" />
-      <div id="description-box">Click ▶️ to start the process animation</div>
     </div>
   </div>
 
@@ -173,8 +156,56 @@
       'EndEvent'
     ];
 
-    const stepDescriptions = {
-      'StartEvent': 'Start of weekly review process.',
-      'TrackPerformance': 'Track user performance data.',
-      'AnalyzeAI': 'AI analyzes performance trends.',
-      'GenerateRecommendations': 'System generates tailored improvement advice.',
+    let currentStep = -1;
+
+    async function loadDiagram() {
+      try {
+        const response = await fetch('diagram5.bpmn');
+        const xml = await response.text();
+        await viewer.importXML(xml);
+      } catch (err) {
+        console.error('Failed to load BPMN diagram:', err);
+      }
+    }
+
+    function clearHighlights() {
+      const canvas = viewer.get('canvas');
+      stepIds.forEach(id => canvas.removeMarker(id, 'highlight'));
+    }
+
+    async function startAnimation() {
+      currentStep = -1;
+      clearHighlights();
+
+      for (let i = 0; i < stepIds.length; i++) {
+        currentStep = i;
+        viewer.get('canvas').addMarker(stepIds[i], 'highlight');
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+
+      // ننتظر ثانية قبل مسح التمييز بعد انتهاء السيناريو
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      currentStep = -1;
+      clearHighlights();
+    }
+
+    function nextStep() {
+      if (currentStep < stepIds.length - 1) {
+        currentStep++;
+        viewer.get('canvas').addMarker(stepIds[currentStep], 'highlight');
+      }
+    }
+
+    function resetAnimation() {
+      currentStep = -1;
+      clearHighlights();
+    }
+
+    function goBack() {
+      window.location.href = 'index.html';
+    }
+
+    loadDiagram();
+  </script>
+</body>
+</html>
