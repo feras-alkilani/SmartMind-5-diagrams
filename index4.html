@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>BPMN User Registration Animation</title>
+  <title>BPMN Session Scheduling Animation</title>
   <style>
     html, body {
       height: 100%;
@@ -132,7 +132,7 @@
 
   <div id="bottom-section">
     <div id="left-side">
-      <div id="process-name">Motivation & Mood Tracking</div>
+      <div id="process-name">Schedule Session Process</div>
       <div id="canvas-container">
         <div id="canvas"></div>
         <button id="back-btn" onclick="goBack()">BACK TO DIAGRAMS</button>
@@ -149,10 +149,10 @@
 
     const stepIds = [
       'StartEvent',
-      'EnterUserData',
-      'CheckAge',
-      'CheckUsername',
-      'CreateAccount',
+      'RequestSession',
+      'CheckAvailability',
+      'ScheduleSession',
+      'SendNotification',
       'EndEvent'
     ];
 
