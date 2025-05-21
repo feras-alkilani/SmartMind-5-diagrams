@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>BPMN User Registration Animation</title>
+  <title>Mood-Based Study Plan Generation</title>
   <style>
     html, body {
       height: 100%;
@@ -132,7 +132,7 @@
 
   <div id="bottom-section">
     <div id="left-side">
-      <div id="process-name">AI-Based Study Plan Generation</div>
+      <div id="process-name">Mood-Based Study Plan Generation</div>
       <div id="canvas-container">
         <div id="canvas"></div>
         <button id="back-btn" onclick="goBack()">BACK TO DIAGRAMS</button>
@@ -147,12 +147,12 @@
   <script>
     const viewer = new BpmnJS({ container: '#canvas' });
 
+    // تأكد تعدل أسماء الـ IDs لتطابق الـ BPMN الخاص فيك
     const stepIds = [
       'StartEvent',
-      'EnterUserData',
-      'CheckAge',
-      'CheckUsername',
-      'CreateAccount',
+      'UserInputMood',
+      'AnalyzeMood',
+      'GeneratePlan',
       'EndEvent'
     ];
 
@@ -160,7 +160,7 @@
 
     async function loadDiagram() {
       try {
-        const response = await fetch('diagram2.bpmn');
+        const response = await fetch('diagram2.bpmn'); // عدل حسب اسم ملف الـ BPMN عندك
         const xml = await response.text();
         await viewer.importXML(xml);
       } catch (err) {
