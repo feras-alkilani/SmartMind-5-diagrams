@@ -53,11 +53,51 @@
       border-right: 1px solid #ccc;
       box-sizing: border-box;
       position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #process-name {
+      height: 10vh;
+      font-size: 1.8rem;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center; 
+      background-color: #fafafa;
+      text-align: center;
+      user-select: none;
+    }
+
+    #canvas-container {
+      flex-grow: 1;
+      position: relative;
     }
 
     #canvas {
       width: 100%;
       height: 100%;
+    }
+
+    #back-btn {
+      position: absolute;
+      bottom: 10px;
+      margin: auto;
+      left: 10px;
+      padding: 8px 16px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    #back-btn:hover {
+      background-color: #0056b3;
     }
 
     #right-side {
@@ -92,7 +132,11 @@
 
   <div id="bottom-section">
     <div id="left-side">
-      <div id="canvas"></div>
+      <div id="process-name">Weekly Progress Review & Adjustment</div>
+      <div id="canvas-container">
+        <div id="canvas"></div>
+        <button id="back-btn" onclick="goBack()">BACK TO DIAGRAMS</button>
+      </div>
     </div>
     <div id="right-side">
       <img id="logo" src="smartMindLogo.png" alt="SmartMind Logo" />
@@ -119,8 +163,6 @@
         const response = await fetch('diagram5.bpmn');
         const xml = await response.text();
         await viewer.importXML(xml);
-
-        // ** بدون أي تكبير **
       } catch (err) {
         console.error('Failed to load BPMN diagram:', err);
       }
@@ -155,6 +197,10 @@
     function resetAnimation() {
       currentStep = -1;
       clearHighlights();
+    }
+
+    function goBack() {
+      window.location.href = 'index.html';
     }
 
     loadDiagram();
