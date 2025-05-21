@@ -116,7 +116,7 @@
 
     async function loadDiagram() {
       try {
-        const response = await fetch('diagram1.bpmn');
+        const response = await fetch('diagram2.bpmn');
         const xml = await response.text();
         await viewer.importXML(xml);
 
