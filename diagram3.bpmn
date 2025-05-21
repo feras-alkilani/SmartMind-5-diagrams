@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_3"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="FeedbackAnalysisProcess" isExecutable="true">
+    <bpmn:startEvent id="StartEvent" name="Start"/>
+    <bpmn:task id="ReceiveFeedback" name="Receive Feedback"/>
+    <bpmn:task id="AnalyzeFeedback" name="Analyze Feedback (AI)"/>
+    <bpmn:task id="GenerateResponse" name="Generate Response"/>
+    <bpmn:task id="SendResponse" name="Send Response"/>
+    <bpmn:endEvent id="EndEvent" name="Done"/>
+
+    <bpmn:sequenceFlow id="flow1" sourceRef="StartEvent" targetRef="ReceiveFeedback"/>
+    <bpmn:sequenceFlow id="flow2" sourceRef="ReceiveFeedback" targetRef="AnalyzeFeedback"/>
+    <bpmn:sequenceFlow id="flow3" sourceRef="AnalyzeFeedback" targetRef="GenerateResponse"/>
+    <bpmn:sequenceFlow id="flow4" sourceRef="GenerateResponse" targetRef="SendResponse"/>
+    <bpmn:sequenceFlow id="flow5" sourceRef="SendResponse" targetRef="EndEvent"/>
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_3">
+    <bpmndi:BPMNPlane id="BPMNPlane_3" bpmnElement="FeedbackAnalysisProcess">
+
+      <bpmndi:BPMNShape id="StartEvent_di" bpmnElement="StartEvent">
+        <dc:Bounds x="50" y="60" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="ReceiveFeedback_di" bpmnElement="ReceiveFeedback">
+        <dc:Bounds x="120" y="40" width="130" height="80"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="AnalyzeFeedback_di" bpmnElement="AnalyzeFeedback">
+        <dc:Bounds x="270" y="40" width="160" height="80"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="GenerateResponse_di" bpmnElement="GenerateResponse">
+        <dc:Bounds x="450" y="40" width="140" height="80"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="SendResponse_di" bpmnElement="SendResponse">
+        <dc:Bounds x="610" y="40" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="EndEvent_di" bpmnElement="EndEvent">
+        <dc:Bounds x="750" y="60" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="flow1_di" bpmnElement="flow1">
+        <di:waypoint x="86" y="78"/>
+        <di:waypoint x="120" y="78"/>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="flow2_di" bpmnElement="flow2">
+        <di:waypoint x="250" y="78"/>
+        <di:waypoint x="270" y="78"/>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="flow3_di" bpmnElement="flow3">
+        <di:waypoint x="430" y="78"/>
+        <di:waypoint x="450" y="78"/>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="flow4_di" bpmnElement="flow4">
+        <di:waypoint x="590" y="78"/>
+        <di:waypoint x="610" y="78"/>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="flow5_di" bpmnElement="flow5">
+        <di:waypoint x="730" y="78"/>
+        <di:waypoint x="750" y="78"/>
+      </bpmndi:BPMNEdge>
+
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
