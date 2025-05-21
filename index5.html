@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>BPMN User Registration Animation</title>
+  <title>Weekly Progress Review & Adjustment</title>
   <style>
     html, body {
       height: 100%;
@@ -147,12 +147,13 @@
   <script>
     const viewer = new BpmnJS({ container: '#canvas' });
 
+    // ✅ الخطوات حسب مخطط diagram5.bpmn
     const stepIds = [
       'StartEvent',
-      'EnterUserData',
-      'CheckAge',
-      'CheckUsername',
-      'CreateAccount',
+      'TrackPerformance',
+      'AnalyzeAI',
+      'GenerateRecommendations',
+      'NotifyStudent',
       'EndEvent'
     ];
 
@@ -160,7 +161,7 @@
 
     async function loadDiagram() {
       try {
-        const response = await fetch('diagram5.bpmn');
+        const response = await fetch('diagram5.bpmn'); // تأكد من وضع الملف بنفس المجلد
         const xml = await response.text();
         await viewer.importXML(xml);
       } catch (err) {
@@ -187,7 +188,7 @@
     }
 
     function nextStep() {
-      if(currentStep < stepIds.length - 1) {
+      if (currentStep < stepIds.length - 1) {
         currentStep++;
         clearHighlights();
         viewer.get('canvas').addMarker(stepIds[currentStep], 'highlight');
