@@ -65,7 +65,7 @@
       border-bottom: 1px solid #ccc;
       display: flex;
       align-items: center;
-      justify-content: center; 
+      justify-content: center;
       background-color: #fafafa;
       text-align: center;
       user-select: none;
@@ -147,10 +147,10 @@
   <script>
     const viewer = new BpmnJS({ container: '#canvas' });
 
-    // تأكد تعدل أسماء الـ IDs لتطابق الـ BPMN الخاص فيك
+    // تأكد أن الأسماء هذه تطابق الـ BPMN file
     const stepIds = [
       'StartEvent',
-      'UserInputMood',
+      'InputMood',
       'AnalyzeMood',
       'GeneratePlan',
       'EndEvent'
@@ -160,7 +160,7 @@
 
     async function loadDiagram() {
       try {
-        const response = await fetch('diagram2.bpmn'); // عدل حسب اسم ملف الـ BPMN عندك
+        const response = await fetch('diagram2.bpmn');
         const xml = await response.text();
         await viewer.importXML(xml);
       } catch (err) {
