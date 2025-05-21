@@ -115,11 +115,11 @@
       object-fit: contain;
     }
 
-     .highlight > .djs-visual > :nth-child(1) {
-  stroke: #28a745 !important; 
-  stroke-width: 4px !important;
-  fill: #d4edda !important;   
-}
+    .highlight > .djs-visual > :nth-child(1) {
+      stroke: #28a745 !important; 
+      stroke-width: 4px !important;
+      fill: #d4edda !important;   
+    }
   </style>
 </head>
 <body>
@@ -178,18 +178,21 @@
       clearHighlights();
       for (let i = 0; i < stepIds.length; i++) {
         currentStep = i;
-        clearHighlights();
+        // لا نزيل التمييز السابق ليظل مميز بشكل تراكمي
         viewer.get('canvas').addMarker(stepIds[i], 'highlight');
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
-      currentStep = -1;
-      clearHighlights();
+      // إزالة التمييز بعد ثانية من نهاية السيناريو
+      setTimeout(() => {
+        clearHighlights();
+        currentStep = -1;
+      }, 1000);
     }
 
     function nextStep() {
       if(currentStep < stepIds.length - 1) {
         currentStep++;
-        clearHighlights();
+        // إضافة تمييز جديد بدون إزالة القديم
         viewer.get('canvas').addMarker(stepIds[currentStep], 'highlight');
       }
     }
