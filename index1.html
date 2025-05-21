@@ -145,65 +145,71 @@
 
   <script src="https://unpkg.com/bpmn-js@18.6.1/dist/bpmn-viewer.development.js"></script>
   <script>
-    const viewer = new BpmnJS({ container: '#canvas' });
+  const viewer = new BpmnJS({ container: '#canvas' });
 
-    const stepIds = [
-      'StartEvent',
-      'EnterUserData',
-      'CheckAge',
-      'CheckUsername',
-      'CreateAccount',
-      'EndEvent'
-    ];
+  const stepIds = [
+    'StartEvent',
+    'EnterUserData',
+    'CheckAge',
+    'CheckUsername',
+    'CreateAccount',
+    'EndEvent'
+  ];
 
-    let currentStep = -1;
+  let currentStep = -1;
 
-    async function loadDiagram() {
-      try {
-        const response = await fetch('diagram1.bpmn');
-        const xml = await response.text();
-        await viewer.importXML(xml);
-      } catch (err) {
-        console.error('Failed to load BPMN diagram:', err);
-      }
+  async function loadDiagram() {
+    try {
+      const response = await fetch('diagram1.bpmn');
+      const xml = await response.text();
+      await viewer.importXML(xml);
+    } catch (err) {
+      console.error('Failed to load BPMN diagram:', err);
+    }
+  }
+
+  function clearHighlights() {
+    const canvas = viewer.get('canvas');
+    stepIds.forEach(id => canvas.removeMarker(id, 'highlight'));
+  }
+
+  async function startAnimation() {
+    currentStep = -1;
+    clearHighlights();
+    const canvas = viewer.get('canvas');
+
+    for (let i = 0; i < stepIds.length; i++) {
+      currentStep = i;
+      canvas.addMarker(stepIds[i], 'highlight');
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
-    function clearHighlights() {
-      const canvas = viewer.get('canvas');
-      stepIds.forEach(id => canvas.removeMarker(id, 'highlight'));
-    }
-
-    async function startAnimation() {
-      currentStep = -1;
+    // إزالة التمييز بعد ثانية من نهاية السيناريو
+    setTimeout(() => {
       clearHighlights();
-      for (let i = 0; i < stepIds.length; i++) {
-        currentStep = i;
-        clearHighlights();
-        viewer.get('canvas').addMarker(stepIds[i], 'highlight');
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
       currentStep = -1;
-      clearHighlights();
-    }
+    }, 1000);
+  }
 
-    function nextStep() {
-      if(currentStep < stepIds.length - 1) {
-        currentStep++;
-        clearHighlights();
-        viewer.get('canvas').addMarker(stepIds[currentStep], 'highlight');
-      }
+  function nextStep() {
+    const canvas = viewer.get('canvas');
+    if (currentStep < stepIds.length - 1) {
+      currentStep++;
+      canvas.addMarker(stepIds[currentStep], 'highlight');
     }
+  }
 
-    function resetAnimation() {
-      currentStep = -1;
-      clearHighlights();
-    }
+  function resetAnimation() {
+    currentStep = -1;
+    clearHighlights();
+  }
 
-    function goBack() {
-      window.location.href = 'index.html';
-    }
+  function goBack() {
+    window.location.href = 'index.html';
+  }
 
-    loadDiagram();
-  </script>
+  loadDiagram();
+</script>
+
 </body>
 </html>
