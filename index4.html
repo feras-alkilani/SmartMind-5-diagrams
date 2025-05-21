@@ -115,11 +115,11 @@
       object-fit: contain;
     }
 
-    .highlight > .djs-visual > :nth-child(1) {
-      stroke: #28a745 !important; 
-      stroke-width: 4px !important;
-      fill: #d4edda !important;   
-    }
+     .highlight > .djs-visual > :nth-child(1) {
+  stroke: #28a745 !important; 
+  stroke-width: 4px !important;
+  fill: #d4edda !important;   
+}
   </style>
 </head>
 <body>
@@ -140,3 +140,70 @@
     </div>
     <div id="right-side">
       <img id="logo" src="smartMindLogo.png" alt="SmartMind Logo" />
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/bpmn-js@18.6.1/dist/bpmn-viewer.development.js"></script>
+  <script>
+    const viewer = new BpmnJS({ container: '#canvas' });
+
+    const stepIds = [
+      'StartEvent',
+      'RequestSession',
+      'CheckAvailability',
+      'ScheduleSession',
+      'SendNotification',
+      'EndEvent'
+    ];
+
+    let currentStep = -1;
+
+    async function loadDiagram() {
+      try {
+        const response = await fetch('diagram4.bpmn');
+        const xml = await response.text();
+        await viewer.importXML(xml);
+      } catch (err) {
+        console.error('Failed to load BPMN diagram:', err);
+      }
+    }
+
+    function clearHighlights() {
+      const canvas = viewer.get('canvas');
+      stepIds.forEach(id => canvas.removeMarker(id, 'highlight'));
+    }
+
+    async function startAnimation() {
+      currentStep = -1;
+      clearHighlights();
+      for (let i = 0; i < stepIds.length; i++) {
+        currentStep = i;
+        clearHighlights();
+        viewer.get('canvas').addMarker(stepIds[i], 'highlight');
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+      currentStep = -1;
+      clearHighlights();
+    }
+
+    function nextStep() {
+      if(currentStep < stepIds.length - 1) {
+        currentStep++;
+        clearHighlights();
+        viewer.get('canvas').addMarker(stepIds[currentStep], 'highlight');
+      }
+    }
+
+    function resetAnimation() {
+      currentStep = -1;
+      clearHighlights();
+    }
+
+    function goBack() {
+      window.location.href = 'index.html';
+    }
+
+    loadDiagram();
+  </script>
+</body>
+</html>
