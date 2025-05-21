@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>BPMN User Registration Animation</title>
+  <title>Registration Process Animation</title>
   <style>
     html, body {
       height: 100%;
@@ -52,6 +52,23 @@
       width: 75%;
       border-right: 1px solid #ccc;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #process-name {
+      height: 10vh;
+      font-size: 1.8rem;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      background-color: #fafafa;
+    }
+
+    #canvas-container {
+      flex-grow: 1;
       position: relative;
     }
 
@@ -92,7 +109,10 @@
 
   <div id="bottom-section">
     <div id="left-side">
-      <div id="canvas"></div>
+      <div id="process-name">Registration Process</div>
+      <div id="canvas-container">
+        <div id="canvas"></div>
+      </div>
     </div>
     <div id="right-side">
       <img id="logo" src="smartMindLogo.png" alt="SmartMind Logo" />
@@ -119,8 +139,6 @@
         const response = await fetch('diagram1.bpmn');
         const xml = await response.text();
         await viewer.importXML(xml);
-
-        // ** بدون أي تكبير **
       } catch (err) {
         console.error('Failed to load BPMN diagram:', err);
       }
