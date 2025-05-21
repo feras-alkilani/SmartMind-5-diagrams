@@ -147,12 +147,13 @@
   <script>
     const viewer = new BpmnJS({ container: '#canvas' });
 
-    // تأكد أن الأسماء هذه تطابق الـ BPMN file
+    // IDs متطابقة مع ملف BPMN المرفق
     const stepIds = [
       'StartEvent',
-      'InputMood',
-      'AnalyzeMood',
+      'EnterMood',
+      'CheckMood',
       'GeneratePlan',
+      'DisplayPlan',
       'EndEvent'
     ];
 
@@ -180,7 +181,7 @@
         currentStep = i;
         clearHighlights();
         viewer.get('canvas').addMarker(stepIds[i], 'highlight');
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 1200));
       }
       currentStep = -1;
       clearHighlights();
