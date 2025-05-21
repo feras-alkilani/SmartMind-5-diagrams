@@ -115,11 +115,11 @@
       object-fit: contain;
     }
 
-  .highlight > .djs-visual > :nth-child(1) {
-  stroke: #28a745 !important; 
-  stroke-width: 4px !important;
-  fill: #d4edda !important;   
-}
+    .highlight > .djs-visual > :nth-child(1) {
+      stroke: #28a745 !important; 
+      stroke-width: 4px !important;
+      fill: #d4edda !important;   
+    }
   </style>
 </head>
 <body>
@@ -183,10 +183,10 @@
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
 
-      // ننتظر ثانية قبل مسح التمييز بعد انتهاء السيناريو
+      // انتظر ثانية ثم امسح التمييز
       await new Promise(resolve => setTimeout(resolve, 1000));
-      currentStep = -1;
       clearHighlights();
+      currentStep = -1;
     }
 
     function nextStep() {
