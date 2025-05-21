@@ -9,48 +9,31 @@
       margin: 0;
       font-family: Arial, sans-serif;
       display: flex;
-      width: 100%;
-      flex-direction: row;
+width: 100%
     }
 
     #left-side {
       width: 75%;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       background-color: #f9f9f9;
-      padding: 20px 0;
-      box-sizing: border-box;
-    }
-
-    #titles-container {
-      width: 60%;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .diagram-title {
-      width: 18%; /* تقريباً 1/5 مع فراغات */
-      font-weight: bold;
-      font-size: 1rem;
-      color: #333;
-      text-align: center;
-      user-select: none;
     }
 
     #grid-container {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 30px;
       width: 60%;
-      gap: 20px;
+      height: 60%;
+      justify-items: center;
+      align-items: center;
     }
 
     .diagram-box {
-      flex: 1 1 0;
-      min-width: 0;
-      height: 100px;
+      width: 100%;
+      height: 100%;
       background-color: #007bff;
       color: white;
       font-size: 1.2rem;
@@ -62,7 +45,6 @@
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.2s ease;
       text-align: center;
-      user-select: none;
     }
 
     .diagram-box:hover {
@@ -89,23 +71,13 @@
 <body>
 
   <div id="left-side">
-
-    <div id="titles-container">
-      <div class="diagram-title">1- Registration Process</div>
-      <div class="diagram-title">2- Mood-Based Study Plan Generation</div>
-      <div class="diagram-title">3- Smart Scheduling & Pomodoro Focus Session</div>
-      <div class="diagram-title">4- Schedule Session Process</div>
-      <div class="diagram-title">5- Weekly Progress Review & Adjustment</div>
-    </div>
-
     <div id="grid-container">
-      <div class="diagram-box" onclick="location.href='index1.html'">Diagram 1</div>
-      <div class="diagram-box" onclick="location.href='index2.html'">Diagram 2</div>
-      <div class="diagram-box" onclick="location.href='index3.html'">Diagram 3</div>
-      <div class="diagram-box" onclick="location.href='index4.html'">Diagram 4</div>
-      <div class="diagram-box" onclick="location.href='index5.html'">Diagram 5</div>
+      <div class="diagram-box" onclick="location.href='index1.html'">Registration Process Diagram</div>
+      <div class="diagram-box" onclick="location.href='index2.html'">Mood-Based Study Plan Generation Diagram</div>
+      <div class="diagram-box" onclick="location.href='index3.html'">Smart Scheduling & Pomodoro Focus Session Diagram</div>
+      <div class="diagram-box" onclick="location.href='index4.html'">Schedule Session Process Diagram</div>
+      <div class="diagram-box" onclick="location.href='index5.html'">Weekly Progress Review & Adjustment Diagram</div>
     </div>
-
   </div>
 
   <div id="right-side">
